@@ -1,0 +1,33 @@
+# Virtual environment
+venv_sam/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Model checkpoints
+checkpoints/
+*.pt
+*.pth
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# TouchDesigner
+Backup/
+*.toe.backup
+*.toe.lock
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.bak

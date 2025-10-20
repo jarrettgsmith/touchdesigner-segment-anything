@@ -1,0 +1,19 @@
+# Requirements for SAM 2 + Syphon + OSC
+# TouchDesigner-friendly segmentation
+
+# Core dependencies
+opencv-python>=4.5.1.48
+numpy<2.0
+pillow>=9.0.0
+
+# Communication
+syphon-python>=0.1.0
+python-osc>=1.8.0
+
+# SAM 2 dependencies
+huggingface_hub
+hydra-core>=1.1
+iopath
+
+# SAM 2 will be installed separately via git
+# See setup.sh for installation
