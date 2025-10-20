@@ -53,9 +53,9 @@ OSC_SEND_IP = "127.0.0.1"
 OSC_SEND_PORT = 7000  # Send mask data to TD
 
 # SAM 2 Configuration
-SAM2_CHECKPOINT = "facebook/sam2-hiera-tiny"  # Use tiny model for better performance
-# Force CPU - MPS has issues with SAM 2
-DEVICE = "cpu"  # "cuda" if torch.cuda.is_available() else "cpu"
+SAM2_CHECKPOINT = "facebook/sam2-hiera-large"  # Large model for best quality
+# Use MPS (Metal Performance Shaders) for GPU acceleration
+DEVICE = "mps" if torch.backends.mps.is_available() else "cpu"
 
 print(f"\n[Config] Video Input: Syphon '{SYPHON_INPUT_NAME}'")
 print(f"[Config] Mask Output: Syphon '{SYPHON_OUTPUT_NAME}'")

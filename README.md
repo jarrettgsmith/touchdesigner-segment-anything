@@ -55,6 +55,8 @@ This will:
 
 ## OSC Commands
 
+All OSC commands are sent to **port 7001** on **127.0.0.1**.
+
 ### Segmentation Modes
 
 ```
@@ -63,19 +65,37 @@ This will:
 /sam/mode "box"      # Box-based prompts (drag to segment)
 ```
 
+**TouchDesigner Example:**
+```python
+# In TouchDesigner Script DAT or Execute DAT
+op('oscout1').sendOSC('/sam/mode', ['point'])
+```
+
 ### Point Prompts
 
 ```
 /sam/point <x> <y> <label>
 
 x, y:  Normalized coordinates (0.0 - 1.0)
+       0,0 = top-left, 1,1 = bottom-right
 label: 1 = include (positive), 0 = exclude (negative)
 ```
 
-**Example:**
+**TouchDesigner Examples:**
 ```python
-# In TouchDesigner Script DAT
+# Segment object at center of frame
 op('oscout1').sendOSC('/sam/point', [0.5, 0.5, 1])
+
+# Add positive point on object
+op('oscout1').sendOSC('/sam/point', [0.3, 0.4, 1])
+
+# Add negative point to exclude background
+op('oscout1').sendOSC('/sam/point', [0.1, 0.1, 0])
+
+# Use mouse coordinates (convert from pixels to normalized)
+x_norm = me.inputCellAttribs[0].vals[0] / 1920  # Assuming 1920x1080
+y_norm = me.inputCellAttribs[0].vals[1] / 1080
+op('oscout1').sendOSC('/sam/point', [x_norm, y_norm, 1])
 ```
 
 ### Box Prompts
@@ -84,18 +104,33 @@ op('oscout1').sendOSC('/sam/point', [0.5, 0.5, 1])
 /sam/box <x1> <y1> <x2> <y2>
 
 All coordinates normalized (0.0 - 1.0)
+x1, y1 = top-left corner
+x2, y2 = bottom-right corner
 ```
 
-**Example:**
+**TouchDesigner Examples:**
 ```python
-# In TouchDesigner Script DAT
-op('oscout1').sendOSC('/sam/box', [0.3, 0.3, 0.7, 0.7])
+# Segment center region
+op('oscout1').sendOSC('/sam/box', [0.25, 0.25, 0.75, 0.75])
+
+# Segment left half
+op('oscout1').sendOSC('/sam/box', [0.0, 0.0, 0.5, 1.0])
+
+# Segment top-right quadrant
+op('oscout1').sendOSC('/sam/box', [0.5, 0.0, 1.0, 0.5])
 ```
 
 ### Clear Prompts
 
 ```
 /sam/clear
+```
+
+Removes all point/box prompts. Useful when starting a new segmentation.
+
+**TouchDesigner Example:**
+```python
+op('oscout1').sendOSC('/sam/clear', [])
 ```
 
 ## OSC Feedback Channels

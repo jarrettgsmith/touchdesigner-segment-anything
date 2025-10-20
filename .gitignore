@@ -24,6 +24,7 @@ checkpoints/
 Backup/
 *.toe.backup
 *.toe.lock
+*.[0-9]*.toe
 
 # Logs
 *.log
